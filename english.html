@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YUMBANYANG | Street Spicy Salad</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;600&family=Oswald:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* ปรับความเข้มของ Overlay ตรงนี้ (0.5 คือ 50%) */
+            --dark-overlay: rgba(0, 0, 0, 0.5); 
+            --street-red: #d00000;
+            --street-yellow: #ffba08;
+            --light-cream: #fefae0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body { 
+            font-family: 'Kanit', sans-serif; 
+            color: var(--light-cream);
+            scroll-behavior: smooth;
+            /* ใส่รูปที่ body ตามเดิม */
+            background: url('https://tropical-orange-tsy6be9vdd.edgeone.app/S__3588112.jpg'); 
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+        }
+
+        /* --- ส่วนที่เพิ่มเข้ามาเพื่อทำพื้นหลังเบลอ --- */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            /* ใส่สี Overlay และคำสั่งเบลอ */
+            background: var(--dark-overlay);
+            backdrop-filter: blur(8px); /* ปรับค่าความเบลอได้ที่นี่ (8px, 10px, 20px) */
+            -webkit-backdrop-filter: blur(8px);
+            z-index: -1; /* ให้มันอยู่ข้างหลังเนื้อหา */
+        }
+        /* -------------------------------------- */
+
+        .page { display: none; padding: 40px 20px; max-width: 1000px; margin: auto; position: relative; z-index: 1; }
+        .active { display: block; }
+
+        header { text-align: center; padding: 60px 0; }
+        header h1 { 
+            font-family: 'Oswald', sans-serif; 
+            font-size: 5rem; 
+            color: var(--street-yellow); 
+            text-transform: uppercase;
+            text-shadow: 4px 4px var(--street-red);
+        }
+
+        .card { 
+            background: rgba(0,0,0,0.7); /* ปรับให้โปร่งแสงนิดๆ จะดูโมเดิร์นขึ้น */
+            padding: 30px; 
+            border-radius: 20px;
+            margin-bottom: 30px;
+            border: 2px solid var(--street-red);
+        }
+        
+        h2 { color: var(--street-yellow); margin-bottom: 20px; border-left: 5px solid var(--street-red); padding-left: 15px; }
+
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .menu-item { 
+            background: #fff; color: #333; border-radius: 15px; overflow: hidden; text-align: center; padding-bottom: 20px;
+        }
+        .menu-img { width: 100%; height: 200px; object-fit: cover; }
+        .price-badge { background: var(--street-red); color: #fff; padding: 5px 15px; border-radius: 20px; font-weight: bold; margin: 10px 0; display: inline-block; }
+
+        .qty-btn { background: #333; color: white; border: none; width: 30px; height: 30px; cursor: pointer; border-radius: 5px; }
+        .qty-input { width: 40px; text-align: center; font-weight: bold; border: none; font-size: 1.2rem; }
+
+        .checkout-box { background: var(--street-yellow); color: #000; padding: 30px; border-radius: 15px; text-align: center; margin-top: 20px; }
+        .btn-confirm { background: var(--street-red); color: white; border: none; padding: 15px 40px; font-size: 1.5rem; border-radius: 10px; cursor: pointer; width: 100%; margin-top: 20px; font-weight: bold; }
+
+        .payment-info { text-align: center; background: white; color: #333; padding: 40px; border-radius: 20px; }
+        .prompt-pay-logo { width: 200px; margin-bottom: 20px; }
+        .qr-placeholder { background: #eee; width: 200px; height: 200px; margin: 20px auto; display: flex; align-items: center; justify-content: center; border: 2px dashed #ccc; }
+
+        footer { text-align: center; padding: 40px; color: #ccc; position: relative; z-index: 1; }
+        .qr-placeholder { 
+            background: white; 
+            width: 250px;       
+            height: 250px;      
+            margin: 20px auto; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border: 2px solid #eee; 
+            border-radius: 15px;
+            padding: 10px;      
+            overflow: hidden;
+        }
+
+        .qr-placeholder img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; 
+        }
+    </style>
+</head>
+<body>
+    <div id="order-page" class="page active">
+        <header>
+            <h1>YUMBANYANG</h1>
+            <p>"Poet Sai Pit Boi Mai Aroi Tae Yak Khai"</p>
+        </header>
+
+        <section class="card">
+            <h2>Business Introduction</h2>
+            <p>We are <b>YUMBANYANG</b>, a local street food specialist. We serve premium spicy salad sticks with our signature spicy dressing. Our dressing uses a secret family recipe that balances 5 flavors perfectly. We serve street food lovers who want high-quality snacks at a very low price.</p>
+        </section>
+
+        <section class="card">
+            <h2>Our Spicy Menu</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <img src="https://www.thailandpostmart.com/files/product_gallery/1013450002216_1_20191220171750.png" class="menu-img">
+                    <h3>Fish Balls</h3>
+                    <span class="price-badge">10 THB</span>
+                    <div>
+                        <button class="qty-btn" onclick="changeQty('fish', -1)">-</button>
+                        <input type="text" id="fish-qty" class="qty-input" value="0" readonly>
+                        <button class="qty-btn" onclick="changeQty('fish', 1)">+</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://tvi.co.th/wp-content/uploads/2024/01/FISH-TOFU-FS-F.jpg" class="menu-img">
+                    <h3>Fish Tofu</h3>
+                    <span class="price-badge">10 THB</span>
+                    <div>
+                        <button class="qty-btn" onclick="changeQty('tofu', -1)">-</button>
+                        <input type="text" id="tofu-qty" class="qty-input" value="0" readonly>
+                        <button class="qty-btn" onclick="changeQty('tofu', 1)">+</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://s359.kapook.com/pagebuilder/43db2728-cdcf-414f-ac3d-6407aa206a02.jpg" class="menu-img">
+                    <h3>Crab Sticks</h3>
+                    <span class="price-badge">10 THB</span>
+                    <div>
+                        <button class="qty-btn" onclick="changeQty('crab', -1)">-</button>
+                        <input type="text" id="crab-qty" class="qty-input" value="0" readonly>
+                        <button class="qty-btn" onclick="changeQty('crab', 1)">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checkout-box">
+                <p>PROMOTION: 3 STICKS FOR 25 THB!</p>
+                <h1 id="total-display">Total: 0 THB</h1>
+                <button class="btn-confirm" onclick="goToPayment()">CONFIRM ORDER</button>
+            </div>
+        </section>
+        
+        <section class="card">
+            <h2>Company Background</h2>
+            <p><b>Company Name:</b> YUMBANYANG Co., Ltd.</p>
+            <p><b>Founded:</b> 2024 by a street food enthusiast.</p>
+            <p><b>Location:</b> Local Night Market.</p>
+            <p><b>Type of Business:</b> Fast-casual Street Food.</p>
+            <p style="margin-top:10px;"><b>Mission:</b> Delicious and affordable skewers for everyone.</p>
+            <p><b>Vision:</b> The most famous spicy salad brand by 2030.</p>
+        </section>
+    </div>
+
+    <div id="payment-page" class="page">
+        <header>
+            <h1 style="font-size: 3rem;">PAYMENT</h1>
+        </header>
+        
+        <div class="payment-info">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c5/PromptPay-logo.png" class="prompt-pay-logo">
+            <h2 style="color:#000; border:none;">Total Amount: <span id="final-amount" style="color:var(--street-red);">0</span> THB</h2>
+            <hr style="margin:20px 0;">
+            <p style="font-size:1.2rem; margin-bottom:10px;">Please transfer to:</p>
+            <h1 style="color:#003d6b; font-size:2.5rem;">092-963-2886</h1>
+            <p style="font-size:1.5rem; font-weight:bold;">นายดุลยุตม์ จันทร์คงสุวรรณ</p>
+            
+            <div class="qr-placeholder">
+                <img src="https://image2url.com/r2/default/images/1771829162391-c5a1132a-aac5-4ad1-a938-0ae0e304a56d.jpg" alt="Promtpay QR Code">
+            </div>
+            
+            
+            <p style="color:#666; font-size:0.9rem;">*Please upload your slip via our Line/FB after payment</p>
+            <button class="btn-confirm" onclick="location.reload()" style="background:#333;">BACK TO HOME</button>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 YUMBANYANG Co. | Poet Sai Pit Boi Mai Aroi Tae Yak Khai
+    </footer>
+
+    <script>
+        let order = { fish: 0, tofu: 0, crab: 0 };
+        let finalPrice = 0;
+
+        function changeQty(item, change) {
+            order[item] = Math.max(0, order[item] + change);
+            document.getElementById(item + '-qty').value = order[item];
+            calculate();
+        }
+
+        function calculate() {
+            let totalSticks = order.fish + order.tofu + order.crab;
+            let sets = Math.floor(totalSticks / 3);
+            let remain = totalSticks % 3;
+            finalPrice = (sets * 25) + (remain * 10);
+            document.getElementById('total-display').innerText = "Total: " + finalPrice + " THB";
+        }
+
+        function goToPayment() {
+            if(finalPrice === 0) {
+                alert("Please select at least 1 item!");
+                return;
+            }
+            document.getElementById('order-page').classList.remove('active');
+            document.getElementById('payment-page').classList.add('active');
+            document.getElementById('final-amount').innerText = finalPrice;
+            window.scrollTo(0,0);
+        }
+    </script>
+</body>
+</html>
