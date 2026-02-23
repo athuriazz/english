@@ -5,104 +5,177 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YUMBANYANG | Street Spicy Salad</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;600&family=Oswald:wght@700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            /* ปรับความเข้มของ Overlay ตรงนี้ (0.5 คือ 50%) */
-            --dark-overlay: rgba(0, 0, 0, 0.5); 
-            --street-red: #d00000;
-            --street-yellow: #ffba08;
-            --light-cream: #fefae0;
-        }
+<style>
+    :root {
+        --dark-overlay: rgba(0, 0, 0, 0.6); 
+        --street-red: #d00000;
+        --street-yellow: #ffba08;
+        --light-cream: #fefae0;
+    }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body { 
-            font-family: 'Kanit', sans-serif; 
-            color: var(--light-cream);
-            scroll-behavior: smooth;
-            /* ใส่รูปที่ body ตามเดิม */
-            background: url('https://tropical-orange-tsy6be9vdd.edgeone.app/S__3588112.jpg'); 
-            background-attachment: fixed;
-            background-size: cover;
-            background-position: center;
-            min-height: 100vh;
-        }
+    body { 
+        font-family: 'Kanit', sans-serif; 
+        color: var(--light-cream);
+        scroll-behavior: smooth;
+        background: url('https://image2url.com/r2/default/images/1771856095842-3ee6319f-1008-4b34-aa62-4127828aa5f1.jpg'); 
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+        min-height: 100vh;
+    }
 
-        /* --- ส่วนที่เพิ่มเข้ามาเพื่อทำพื้นหลังเบลอ --- */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            /* ใส่สี Overlay และคำสั่งเบลอ */
-            background: var(--dark-overlay);
-            backdrop-filter: blur(8px); /* ปรับค่าความเบลอได้ที่นี่ (8px, 10px, 20px) */
-            -webkit-backdrop-filter: blur(8px);
-            z-index: -1; /* ให้มันอยู่ข้างหลังเนื้อหา */
-        }
-        /* -------------------------------------- */
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: var(--dark-overlay);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        z-index: -1;
+    }
+    /* บล็อกสัญลักษณ์สำหรับคลิกไป URL */
+.link-card {
+    text-align: center;
+    cursor: pointer;
+}
 
-        .page { display: none; padding: 40px 20px; max-width: 1000px; margin: auto; position: relative; z-index: 1; }
-        .active { display: block; }
+.clickable-img {
+    width: 120px; /* ปรับขนาดรูปได้ตามใจชอบ */
+    height: auto;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+    animation: pulse 2s infinite; /* เพิ่มเอฟเฟกต์เต้นตุบๆ */
+}
 
-        header { text-align: center; padding: 60px 0; }
-        header h1 { 
-            font-family: 'Oswald', sans-serif; 
-            font-size: 5rem; 
-            color: var(--street-yellow); 
-            text-transform: uppercase;
-            text-shadow: 4px 4px var(--street-red);
-        }
+.clickable-img:hover {
+    transform: scale(1.15) rotate(5deg); /* ชี้แล้วขยาย+เอียงเล็กน้อย */
+    filter: drop-shadow(0 10px 20px rgba(255,186,8,0.5));
+}
 
-        .card { 
-            background: rgba(0,0,0,0.7); /* ปรับให้โปร่งแสงนิดๆ จะดูโมเดิร์นขึ้น */
-            padding: 30px; 
-            border-radius: 20px;
-            margin-bottom: 30px;
-            border: 2px solid var(--street-red);
-        }
-        
-        h2 { color: var(--street-yellow); margin-bottom: 20px; border-left: 5px solid var(--street-red); padding-left: 15px; }
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+    .page { display: none; padding: 40px 20px; max-width: 1000px; margin: auto; position: relative; z-index: 1; }
+    .active { display: block; }
 
-        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .menu-item { 
-            background: #fff; color: #333; border-radius: 15px; overflow: hidden; text-align: center; padding-bottom: 20px;
-        }
-        .menu-img { width: 100%; height: 200px; object-fit: cover; }
-        .price-badge { background: var(--street-red); color: #fff; padding: 5px 15px; border-radius: 20px; font-weight: bold; margin: 10px 0; display: inline-block; }
+    header { text-align: center; padding: 60px 0; }
+    header h1 { 
+        font-family: 'Oswald', sans-serif; 
+        font-size: 5rem; 
+        color: var(--street-yellow); 
+        text-transform: uppercase;
+        text-shadow: 4px 4px var(--street-red);
+    }
 
-        .qty-btn { background: #333; color: white; border: none; width: 30px; height: 30px; cursor: pointer; border-radius: 5px; }
-        .qty-input { width: 40px; text-align: center; font-weight: bold; border: none; font-size: 1.2rem; }
+    /* === Card & Hover Effects === */
+    .card { 
+        background: rgba(0,0,0,0.8); 
+        padding: 30px; 
+        border-radius: 20px;
+        margin-bottom: 30px;
+        border: 2px solid var(--street-red);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
 
-        .checkout-box { background: var(--street-yellow); color: #000; padding: 30px; border-radius: 15px; text-align: center; margin-top: 20px; }
-        .btn-confirm { background: var(--street-red); color: white; border: none; padding: 15px 40px; font-size: 1.5rem; border-radius: 10px; cursor: pointer; width: 100%; margin-top: 20px; font-weight: bold; }
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 35px rgba(208, 0, 0, 0.4);
+        border-color: var(--street-yellow);
+    }
 
-        .payment-info { text-align: center; background: white; color: #333; padding: 40px; border-radius: 20px; }
-        .prompt-pay-logo { width: 200px; margin-bottom: 20px; }
-        .qr-placeholder { background: #eee; width: 200px; height: 200px; margin: 20px auto; display: flex; align-items: center; justify-content: center; border: 2px dashed #ccc; }
+    /* === Menu & Button === */
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .menu-item { background: #fff; color: #333; border-radius: 15px; overflow: hidden; text-align: center; padding-bottom: 20px; transition: all 0.3s ease; }
+    .menu-item:hover { transform: translateY(-8px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+    .menu-img { width: 100%; height: 200px; object-fit: cover; }
+    .price-badge { background: var(--street-red); color: #fff; padding: 5px 15px; border-radius: 20px; font-weight: bold; margin: 10px 0; display: inline-block; }
+    .qty-btn { background: #333; color: white; border: none; width: 30px; height: 30px; cursor: pointer; border-radius: 5px; }
+    .qty-input { width: 40px; text-align: center; font-weight: bold; border: none; font-size: 1.2rem; }
 
-        footer { text-align: center; padding: 40px; color: #ccc; position: relative; z-index: 1; }
-        .qr-placeholder { 
-            background: white; 
-            width: 250px;       
-            height: 250px;      
-            margin: 20px auto; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            border: 2px solid #eee; 
-            border-radius: 15px;
-            padding: 10px;      
-            overflow: hidden;
-        }
+    .checkout-box { background: var(--street-yellow); color: #000; padding: 30px; border-radius: 15px; text-align: center; margin-top: 20px; }
+    
+    .btn-confirm { 
+        background: var(--street-red); 
+        color: white; border: none; padding: 15px 40px; font-size: 1.5rem; border-radius: 10px; cursor: pointer; width: 100%; margin-top: 20px; font-weight: bold;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 4px 0px #800000;
+    }
+    .btn-confirm:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(208, 0, 0, 0.5); }
+    .btn-confirm:active { transform: translateY(2px); box-shadow: 0 2px 0px #800000; }
 
-        .qr-placeholder img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain; 
-        }
-    </style>
+    /* === ส่วน PAYMENT ที่ปรับขนาดใหม่ (เล็กลง) === */
+    .payment-info { 
+        text-align: center; 
+        background: white; 
+        color: #333; 
+        padding: 30px; 
+        border-radius: 20px; 
+        max-width: 400px; /* จำกัดความกว้างหน้าต่างจ่ายเงิน */
+        margin: 0 auto;
+    }
+    .prompt-pay-logo { 
+        width: 140px; /* ลดขนาดโลโก้ลง */
+        margin-bottom: 15px; 
+    }
+    .qr-placeholder { 
+        background: white; 
+        width: 200px; /* ลดขนาดกรอบ QR */
+        height: 200px; 
+        margin: 15px auto; 
+        display: flex; align-items: center; justify-content: center; 
+        border: 1px solid #ddd; 
+        border-radius: 10px;
+        padding: 10px;
+    }
+    .qr-placeholder img { 
+        width: 100%; 
+        height: 100%; 
+        object-fit: contain; 
+    }
+    .account-num { color: #003d6b; font-size: 1.8rem; font-weight: bold; margin: 10px 0; }
+    .account-name { font-size: 1.2rem; font-weight: bold; color: #444; }
+
+    /* === Team Grid === */
+    .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; text-align: center; margin-top: 20px; }
+    .member-item { transition: 0.3s; }
+    .member-item:hover { transform: translateY(-5px); }
+    .member-img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--street-yellow); object-fit: cover; }
+
+    @media (max-width: 600px) {
+        header h1 { font-size: 3rem; }
+        .team-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    footer { text-align: center; padding: 40px; color: #ccc; }
+    /* บล็อกรูปภาพท้ายสุดก่อน Footer */
+.final-placeholder {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.bottom-link-img {
+    width: 100%;
+    max-width: 300px; /* ปรับขนาดความกว้างรูปตามต้องการ */
+    border-radius: 15px;
+    border: 3px solid var(--street-yellow);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.bottom-link-img:hover {
+    transform: translateY(-10px) scale(1.05); /* เด้งขึ้นและขยาย */
+    box-shadow: 0 15px 30px rgba(255, 186, 8, 0.4);
+    border-color: var(--street-red);
+}
+</style>
 </head>
 <body>
+
     <div id="order-page" class="page active">
         <header>
             <h1>YUMBANYANG</h1>
@@ -112,6 +185,35 @@
         <section class="card">
             <h2>Business Introduction</h2>
             <p>We are <b>YUMBANYANG</b>, a local street food specialist. We serve premium spicy salad sticks with our signature spicy dressing. Our dressing uses a secret family recipe that balances 5 flavors perfectly. We serve street food lovers who want high-quality snacks at a very low price.</p>
+        </section>
+
+        <section class="card">
+            <h2>The Origin of Spicy Meatball Salad</h2>
+            <p>The <b>"Spicy Meatball Salad"</b> or <i>Yum Luk Chin</i> is a culinary masterpiece that represents the perfect fusion of Chinese food preservation and Thai bold flavors.</p>
+            <div style="margin-top: 15px;">
+                <p><b>1. The Chinese Influence:</b> The journey began with Chinese immigrants (Teochew and Hakka) who introduced meatballs to Thailand. Traditionally served in soups or grilled with sweet sauce.</p>
+                <p style="margin-top: 10px;"><b>2. The Thai Innovation:</b> Thai locals adapted this into the <b>"Yum"</b> culture—replacing sweet sauces with fresh lime juice, fish sauce, and bird’s eye chilies.</p>
+                <p style="margin-top: 10px;"><b>3. Street Food Royalty:</b> Today, it’s a staple because it’s convenient, versatile, and balanced with fresh herbs like celery and tomatoes.</p>
+        <section class="card">
+    <h2>Why This Menu?</h2>
+    <p><b>Spicy Meatball Salad</b> is a popular street food that is easy for everyone to find. It has a unique Thai flavor that perfectly balances sour, spicy, salty, and sweet.</p>
+</section>
+
+<section class="card">
+    <h2>Fun & Customization</h2>
+    <p>It’s also a fun menu to make because you can customize the ingredients however you like, making every bowl a unique experience for the customer.</p>
+</section>
+
+<section class="card">
+    <h2>Menu & Price</h2>
+    <p>Our menu features premium <b>grilled meatballs on a stick</b> served with our signature spicy dressing.</p>
+    <div style="margin-top: 15px; background: rgba(255,186,8,0.1); padding: 15px; border-radius: 10px; border-left: 4px solid var(--street-yellow);">
+        <p>• Price: <b>10 THB per stick</b></p>
+        <p>• Promotion: <span style="color: var(--street-yellow); font-weight: bold;">3 sticks for 25 THB!</span></p>
+    </div>
+    <p style="margin-top: 15px; font-style: italic; color: #ccc;">"This price is affordable for students and makes it easy to decide to buy."</p>
+</section>
+            </div>
         </section>
 
         <section class="card">
@@ -155,15 +257,43 @@
                 <button class="btn-confirm" onclick="goToPayment()">CONFIRM ORDER</button>
             </div>
         </section>
-        
+
         <section class="card">
-            <h2>Company Background</h2>
-            <p><b>Company Name:</b> YUMBANYANG Co., Ltd.</p>
-            <p><b>Founded:</b> 2024 by a street food enthusiast.</p>
-            <p><b>Location:</b> Local Night Market.</p>
-            <p><b>Type of Business:</b> Fast-casual Street Food.</p>
-            <p style="margin-top:10px;"><b>Mission:</b> Delicious and affordable skewers for everyone.</p>
-            <p><b>Vision:</b> The most famous spicy salad brand by 2030.</p>
+            <h2>Our Team</h2>
+            <div class="team-grid">
+                <div class="member-item">
+                    <img src="https://image2url.com/r2/default/images/1771858849227-d6473836-827e-4c22-b367-84390cd0b97a.jpg" class="member-img">
+                    <p class="member-name">Dunlayut Chankongsuwan 5/11 7</p>
+                </div>
+                <div class="member-item">
+                    <img src="https://image2url.com/r2/default/images/1771859083810-b6d36ca7-08b0-4a52-80f0-2c155d84504a.jpg" class="member-img">
+                    <p class="member-name">Ratchapon Chumdee 5/11 No.8</p>
+                </div>
+                <div class="member-item">
+                    <img src="https://image2url.com/r2/default/images/1771858947602-06016e8c-908d-450c-8e61-a05a6dfde5af.jpg" class="member-img">
+                    <p class="member-name">Nantiya Boonpeng 5/11 No.14</p>
+                </div>
+                <div class="member-item">
+                    <img src="https://image2url.com/r2/default/images/1771858861800-9182b373-d366-4334-b19b-40562ac9efff.jpg" class="member-img">
+                    <p class="member-name">Chutikan lamo 5/11 No.18</p>
+                </div>
+                <div class="member-item">
+                    <img src="https://image2url.com/r2/default/images/1771858924576-974210ce-17f6-430e-9364-91f511c67a39.jpg" class="member-img">
+                    <p class="member-name">Nuttapong Tachalad 5/11 No.24</p>
+                </div>
+                <div class="member-item">
+                    <img src="https://image2url.com/r2/default/images/1771858901341-cada57d9-9c35-4856-8f31-677f82bc7304.jpg" class="member-img">
+                    <p class="member-name">Pitchayut Malithong 5/11 No.25</p>
+                </div>
+                <div class="member-item">
+                    <img src="https://image2url.com/r2/default/images/1771858427741-a9aaeacb-9cd2-41e1-8397-93b6a05dc062.jpg" class="member-img">
+                    <p class="member-name">Tisanamadee netwong 5/11 No.35</p>
+                </div>
+                <div class="member-item">
+                    <img src="https://image2url.com/r2/default/images/1771858884541-e2e6c220-c544-440d-be0c-ad6354d96282.jpg" class="member-img">
+                    <p class="member-name">Natcha Khongbuasorn 5/11 No.37</p>
+                </div>
+            </div>
         </section>
     </div>
 
@@ -184,11 +314,20 @@
                 <img src="https://image2url.com/r2/default/images/1771829162391-c5a1132a-aac5-4ad1-a938-0ae0e304a56d.jpg" alt="Promtpay QR Code">
             </div>
             
-            
             <p style="color:#666; font-size:0.9rem;">*Please upload your slip via our Line/FB after payment</p>
             <button class="btn-confirm" onclick="location.reload()" style="background:#333;">BACK TO HOME</button>
         </div>
     </div>
+<div class="final-placeholder">
+            <a href="https://www.instagram.com/yumbanyang?igsh=M2J2NjN5MDV4bTcz" target="_blank">
+                <img src="https://image2url.com/r2/default/images/1771859448913-b14a2432-3750-44cb-8a57-ccdfdc7665bd.jpg" 
+                     alt="Promotion Banner" 
+                     class="bottom-link-img">
+            </a>
+            <p style="margin-top: 10px; font-size: 0.8rem; color: var(--street-yellow); opacity: 0.8;">
+                Click on the image to see more
+            </p>
+        </div>
 
     <footer>
         &copy; 2026 YUMBANYANG Co. | Poet Sai Pit Boi Mai Aroi Tae Yak Khai
